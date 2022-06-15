@@ -1,0 +1,37 @@
+{
+    "schemaVersion": 1,
+    "id": "baby_powder",
+    "version": "${version}",
+
+    "name": "Baby Powder",
+    "description": "Adds baby powder to stop babies from turning into adults",
+    "authors": [
+        "friedkeenan"
+    ],
+
+    "contact": {
+        "sources": "https://github.com/friedkeenan/baby-powder",
+        "issues": "https://github.com/friedkeenan/baby-powder/issues"
+    },
+
+    "license": "ISC",
+    "icon": "assets/baby_powder/icon.png",
+
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "io.github.friedkeenan.baby_powder.BabyPowderMod"
+        ]
+    },
+
+    "mixins": [
+        "baby_powder.mixins.json"
+    ],
+
+    "depends": {
+        "fabricloader": ">=0.14.7",
+        "fabric": "*",
+        "minecraft": "~1.19",
+        "java": ">=17"
+    }
+}
