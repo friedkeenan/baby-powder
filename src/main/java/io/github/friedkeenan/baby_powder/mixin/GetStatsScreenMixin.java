@@ -7,6 +7,11 @@ import org.spongepowered.asm.mixin.Shadow;
 import io.github.friedkeenan.baby_powder.StatsScreenGetter;
 import net.minecraft.client.gui.screens.achievement.StatsScreen;
 
+/*
+    This should just be an accessor mixin, but sadly
+    when it is written that way it raises a compile error
+    *only* when compiling. It runs fine when running through vscode.
+*/
 @Mixin(targets = {"net/minecraft/client/gui/screens/achievement/StatsScreen$MobsStatisticsList"})
 public class GetStatsScreenMixin implements StatsScreenGetter {
     @Shadow
