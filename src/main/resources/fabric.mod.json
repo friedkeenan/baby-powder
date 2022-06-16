@@ -4,7 +4,7 @@
     "version": "${version}",
 
     "name": "Baby Powder",
-    "description": "Adds baby powder to stop babies from turning into adults",
+    "description": "Adds baby powder to stop babies from turning into adults.",
     "authors": [
         "friedkeenan"
     ],
