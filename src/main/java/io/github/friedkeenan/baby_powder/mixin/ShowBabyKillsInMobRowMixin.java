@@ -18,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import io.github.friedkeenan.baby_powder.BabyPowderStats;
+import io.github.friedkeenan.baby_powder.StatsScreenGetter;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.Font;
@@ -36,7 +37,7 @@ public class ShowBabyKillsInMobRowMixin {
     @Final
     private Component mobName;
 
-    private MobsStatisticsListAccessor list;
+    private StatsScreenGetter list;
 
     private @Nullable Component baby_kills = null;
     private @Nullable Component babies_killed_by = null;
@@ -54,7 +55,7 @@ public class ShowBabyKillsInMobRowMixin {
     }
 
     @Inject(at = @At("TAIL"), method = "<init>")
-    private void createBabyKillComponents(@Coerce MobsStatisticsListAccessor mobs_statistics_list, EntityType<?> entity, CallbackInfo info) {
+    private void createBabyKillComponents(@Coerce StatsScreenGetter mobs_statistics_list, EntityType<?> entity, CallbackInfo info) {
         this.list = mobs_statistics_list;
 
         final var stats = this.getStats();

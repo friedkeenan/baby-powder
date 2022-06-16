@@ -10,6 +10,7 @@
     ],
 
     "contact": {
+        "homepage": "https://github.com/friedkeenan/baby-powder",
         "sources": "https://github.com/friedkeenan/baby-powder",
         "issues": "https://github.com/friedkeenan/baby-powder/issues"
     },
@@ -29,7 +30,7 @@
     ],
 
     "depends": {
-        "fabricloader": ">=0.14.7",
+        "fabricloader": ">=0.14.8",
         "fabric": "*",
         "minecraft": "~1.19",
         "java": ">=17"

@@ -15,7 +15,7 @@
     "client": [
         "ScreenAccessor",
         "StatsScreenAccessor",
-        "MobsStatisticsListAccessor",
+        "GetStatsScreenMixin",
         "ShowBabyKillsInMobRowMixin"
     ],
 
