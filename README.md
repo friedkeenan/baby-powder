@@ -1,0 +1,1 @@
+<img src="src/main/resources/assets/baby_powder/icon.png" width="128">
