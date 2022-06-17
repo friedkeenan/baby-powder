@@ -1,0 +1,41 @@
+{
+    "parent": "minecraft:husbandry/breed_an_animal",
+
+    "display": {
+        "icon": {
+            "item": "baby_powder:baby_powder"
+        },
+
+        "title": {
+            "translate": "advancements.baby_powder.collect_baby_powder.title"
+        },
+
+        "description": {
+            "translate": "advancements.baby_powder.collect_baby_powder.description"
+        },
+
+        "frame": "sinister",
+        "hidden": true
+    },
+
+    "criteria": {
+        "baby_powder": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "baby_powder:baby_powder"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+
+    "requirements": [
+        [
+            "baby_powder"
+        ]
+    ]
+}

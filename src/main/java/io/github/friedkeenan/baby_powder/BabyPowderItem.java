@@ -35,7 +35,7 @@ public class BabyPowderItem extends Item {
     }
 
     public static void PlayPoofSound(AgeableMob mob) {
-        mob.playSound(BabyPowderMod.BABY_POWDER_POOF, 1.0f, mob.getRandom().nextFloat() + 1.0f);
+        mob.playSound(BabyPowderMod.BABY_POWDER_POOF, 1.0f, 1.0f);
     }
 
     public static InteractionResult ApplyBabyPowder(AgeableMob mob, ItemStack item) {

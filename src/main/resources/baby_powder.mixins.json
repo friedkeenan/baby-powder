@@ -9,14 +9,18 @@
         "DropBabyPowderMixin",
         "BabyPowderPriorityMixin",
         "TrackBabyKillsMixin",
-        "TrackBabiesKilledByMixin"
+        "TrackBabiesKilledByMixin",
+
+        "AddSinisterFrameTypeMixin"
     ],
 
     "client": [
         "ScreenAccessor",
         "StatsScreenAccessor",
         "GetStatsScreenMixin",
-        "ShowBabyKillsInMobRowMixin"
+        "ShowBabyKillsInMobRowMixin",
+
+        "AddSinisterSoundMixin"
     ],
 
     "injectors": {
