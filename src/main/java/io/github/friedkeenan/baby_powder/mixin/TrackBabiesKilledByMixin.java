@@ -1,5 +1,6 @@
 package io.github.friedkeenan.baby_powder.mixin;
 
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -18,7 +19,11 @@ public class TrackBabiesKilledByMixin {
     @Inject(at = @At("HEAD"), method = "die")
     private void trackBabiesKilled(DamageSource dmg_source, CallbackInfo info) {
         final var player = this.asServerPlayer();
-        final var killer = player.getKillCredit();
+
+        @Nullable final var killer = player.getKillCredit();
+        if (killer == null) {
+            return;
+        }
 
         player.awardStat(BabyPowderStats.BABIES_KILLED_BY.get(killer.getType()));
     }

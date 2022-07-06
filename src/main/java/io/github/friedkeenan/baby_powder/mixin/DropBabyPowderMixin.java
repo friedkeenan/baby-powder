@@ -1,5 +1,6 @@
 package io.github.friedkeenan.baby_powder.mixin;
 
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -46,8 +47,8 @@ public class DropBabyPowderMixin {
         if (hurt_by_player && mob.isBaby()) {
             var should_drop = mob.getRandom().nextFloat() < BABY_POWDER_CHANCE;
 
-            final var killer = dmg_source.getEntity();
-            if (killer instanceof Player) {
+            @Nullable final var killer = dmg_source.getEntity();
+            if (killer != null && killer instanceof Player) {
                 final var baby_killer = (InnocentBabyKiller) killer;
 
                 if (!baby_killer.getKilledInnocentBaby()) {

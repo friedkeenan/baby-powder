@@ -2,7 +2,7 @@ package io.github.friedkeenan.baby_powder;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
