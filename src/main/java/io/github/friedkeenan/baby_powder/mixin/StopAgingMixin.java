@@ -35,7 +35,7 @@ public class StopAgingMixin implements BabyPowderableMob {
 
     @Inject(at = @At("HEAD"), method = "setAge", cancellable = true)
     private void stopAging(int age, CallbackInfo info) {
-        if (this.baby_powdered && age >= 0) {
+        if (this.baby_powdered) {
             info.cancel();
         }
     }

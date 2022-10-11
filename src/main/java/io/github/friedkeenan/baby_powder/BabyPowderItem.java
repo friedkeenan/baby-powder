@@ -19,11 +19,15 @@ import net.minecraft.world.level.gameevent.GameEvent;
 public class BabyPowderItem extends Item {
     public static final String TAG_ENTITY_TYPE = "BabyPowderEntity";
 
+    private static ResourceLocation EntityTypeKey(AgeableMob mob) {
+        return Registry.ENTITY_TYPE.getKey(mob.getType());
+    }
+
     public static ItemStack ForMob(AgeableMob mob) {
         final var item = new ItemStack(BabyPowderMod.BABY_POWDER);
         final var data = new CompoundTag();
 
-        data.putString(TAG_ENTITY_TYPE, BabyPowderMod.EntityTypeKey(mob));
+        data.putString(TAG_ENTITY_TYPE, EntityTypeKey(mob).toString());
         item.setTag(data);
 
         return item;
@@ -53,8 +57,8 @@ public class BabyPowderItem extends Item {
             return InteractionResult.PASS;
         }
 
-        final var powder_type = item.getTag().getString(BabyPowderItem.TAG_ENTITY_TYPE);
-        final var mob_type    = BabyPowderMod.EntityTypeKey(mob);
+        final var powder_type = new ResourceLocation(item.getTag().getString(TAG_ENTITY_TYPE));
+        final var mob_type    = EntityTypeKey(mob);
 
         if (!powder_type.equals(mob_type)) {
             return InteractionResult.PASS;

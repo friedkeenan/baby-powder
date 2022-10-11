@@ -7,7 +7,6 @@ import net.fabricmc.api.ModInitializer;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -17,10 +16,6 @@ public class BabyPowderMod implements ModInitializer {
 
     public static final BabyPowderItem BABY_POWDER = new BabyPowderItem(new Item.Properties().rarity(Rarity.RARE));
     public static final SoundEvent BABY_POWDER_POOF = new SoundEvent(new ResourceLocation("baby_powder:entity.baby_powder.poof"));
-
-    public static String EntityTypeKey(AgeableMob mob) {
-        return Registry.ENTITY_TYPE.getKey(mob.getType()).toString();
-    }
 
     public void onInitialize() {
         BabyPowderStats.register();
