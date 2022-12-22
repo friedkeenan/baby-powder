@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.jetbrains.annotations.Nullable;
 
-import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -20,7 +20,7 @@ public class BabyPowderItem extends Item {
     public static final String TAG_ENTITY_TYPE = "BabyPowderEntity";
 
     private static ResourceLocation EntityTypeKey(AgeableMob mob) {
-        return Registry.ENTITY_TYPE.getKey(mob.getType());
+        return EntityType.getKey(mob.getType());
     }
 
     public static ItemStack ForMob(AgeableMob mob) {
@@ -39,7 +39,7 @@ public class BabyPowderItem extends Item {
     }
 
     public static void PlayPoofSound(AgeableMob mob) {
-        mob.playSound(BabyPowderMod.BABY_POWDER_POOF, 1.0f, 1.0f);
+        mob.playSound(BabyPowderMod.BABY_POWDER_POOF);
     }
 
     public static InteractionResult ApplyBabyPowder(AgeableMob mob, ItemStack item) {
@@ -81,9 +81,12 @@ public class BabyPowderItem extends Item {
     @Override
     public void appendHoverText(ItemStack item, @Nullable Level level, List<Component> components, TooltipFlag flag) {
         if (item.hasTag()) {
-            final var entity_type = Registry.ENTITY_TYPE.get(new ResourceLocation(item.getTag().getString(TAG_ENTITY_TYPE)));
+            final var entity_type = EntityType.byString(item.getTag().getString(TAG_ENTITY_TYPE));
+            if (entity_type.isEmpty()) {
+                return;
+            }
 
-            components.add(entity_type.getDescription());
+            components.add(entity_type.get().getDescription());
         }
 
         super.appendHoverText(item, level, components, flag);

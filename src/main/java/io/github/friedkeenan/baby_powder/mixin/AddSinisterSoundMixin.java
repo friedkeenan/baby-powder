@@ -41,7 +41,7 @@ public class AddSinisterSoundMixin {
         final var frame = (PotentiallySinisterFrameType) (Object) advancement.getDisplay().getFrame();
 
         if (frame.isSinister()) {
-            component.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.AMBIENT_CAVE, 1.0f, 1.0f));
+            component.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.AMBIENT_CAVE.value(), 1.0f, 1.0f));
         }
     }
 }
