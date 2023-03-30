@@ -1,8 +1,6 @@
 package io.github.friedkeenan.baby_powder.mixin;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.function.Function;
 
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
@@ -11,7 +9,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Coerce;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -22,10 +20,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentUtils;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.stats.StatsCounter;
 import net.minecraft.world.entity.EntityType;
 
@@ -62,11 +57,15 @@ public class ShowBabyKillsInMobRowMixin {
         final var num_baby_kills = stats.getValue(BabyPowderStats.BABIES_KILLED.get(entity));
         if (num_baby_kills > 0) {
             this.baby_kills = Component.translatable("stat_type.baby_powder.baby_kills", num_baby_kills, this.mobName);
+        } else {
+            this.baby_kills = Component.translatable("stat_type.baby_powder.baby_kills.none", this.mobName);
         }
 
         final var num_babies_killed_by = stats.getValue(BabyPowderStats.BABIES_KILLED_BY.get(entity));
         if (num_babies_killed_by > 0) {
-            this.babies_killed_by =Component.translatable("stat_type.baby_powder.babies_killed_by", this.mobName, num_babies_killed_by);
+            this.babies_killed_by = Component.translatable("stat_type.baby_powder.babies_killed_by", this.mobName, num_babies_killed_by);
+        } else {
+            this.babies_killed_by = Component.translatable("stat_type.baby_powder.babies_killed_by.none", this.mobName);
         }
     }
 
@@ -85,22 +84,21 @@ public class ShowBabyKillsInMobRowMixin {
         }
     }
 
-    private static MutableComponent JoinLinesForNarration(Component... components) {
-        final var list = new ArrayList<>(Arrays.asList(components));
-        list.removeIf(x -> x == null);
-
-        return ComponentUtils.formatList(list, CommonComponents.NARRATION_SEPARATOR, Function.identity());
-    }
-
-    @Redirect(
+    @ModifyArg(
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/network/chat/CommonComponents;joinForNarration(Lnet/minecraft/network/chat/Component;Lnet/minecraft/network/chat/Component;)Lnet/minecraft/network/chat/MutableComponent;"
+            target = "Lnet/minecraft/network/chat/CommonComponents;joinForNarration([Lnet/minecraft/network/chat/Component;)Lnet/minecraft/network/chat/MutableComponent;"
         ),
 
+        index  = 0,
         method = "getNarration"
     )
-    private MutableComponent addBabyKillNarration(Component kills, Component killed_by) {
-        return JoinLinesForNarration(kills, killed_by, this.baby_kills, this.babies_killed_by);
+    private Component[] addBabyKillNarration(Component components[]) {
+        var result = Arrays.copyOf(components, components.length + 2);
+
+        result[components.length + 0] = this.baby_kills;
+        result[components.length + 1] = this.babies_killed_by;
+
+        return result;
     }
 }
