@@ -36,6 +36,9 @@ public class ShowBabyKillsInMobRowMixin {
     private @Nullable Component baby_kills = null;
     private @Nullable Component babies_killed_by = null;
 
+    private boolean has_baby_kills     = false;
+    private boolean was_killed_by_baby = false;
+
     private StatsScreenAccessor getScreen() {
         return (StatsScreenAccessor) this.list.getStatsScreen();
     }
@@ -56,6 +59,7 @@ public class ShowBabyKillsInMobRowMixin {
 
         final var num_baby_kills = stats.getValue(BabyPowderStats.BABIES_KILLED.get(entity));
         if (num_baby_kills > 0) {
+            this.has_baby_kills = true;
             this.baby_kills = Component.translatable("stat_type.baby_powder.baby_kills", num_baby_kills, this.mobName);
         } else {
             this.baby_kills = Component.translatable("stat_type.baby_powder.baby_kills.none", this.mobName);
@@ -63,6 +67,7 @@ public class ShowBabyKillsInMobRowMixin {
 
         final var num_babies_killed_by = stats.getValue(BabyPowderStats.BABIES_KILLED_BY.get(entity));
         if (num_babies_killed_by > 0) {
+            this.was_killed_by_baby = true;
             this.babies_killed_by = Component.translatable("stat_type.baby_powder.babies_killed_by", this.mobName, num_babies_killed_by);
         } else {
             this.babies_killed_by = Component.translatable("stat_type.baby_powder.babies_killed_by.none", this.mobName);
@@ -74,19 +79,16 @@ public class ShowBabyKillsInMobRowMixin {
         final var font = this.getFont();
         var height_offset = j + 1 + font.lineHeight * 3;
 
-        if (this.baby_kills != null) {
-            GuiComponent.drawString(pose_stack, font, this.baby_kills, k + 2 + 10, height_offset, 0x909090);
-            height_offset += font.lineHeight;
-        }
+        GuiComponent.drawString(pose_stack, font, this.baby_kills, k + 2 + 10, height_offset, this.has_baby_kills ? 0x909090 : 0x606060);
 
-        if (this.babies_killed_by != null) {
-            GuiComponent.drawString(pose_stack, font, this.babies_killed_by, k + 2 + 10, height_offset, 0x909090);
-        }
+        height_offset += font.lineHeight;
+
+        GuiComponent.drawString(pose_stack, font, this.babies_killed_by, k + 2 + 10, height_offset, this.was_killed_by_baby ? 0x909090 : 0x606060);
     }
 
     @ModifyArg(
         at = @At(
-            value = "INVOKE",
+            value  = "INVOKE",
             target = "Lnet/minecraft/network/chat/CommonComponents;joinForNarration([Lnet/minecraft/network/chat/Component;)Lnet/minecraft/network/chat/MutableComponent;"
         ),
 
