@@ -12,14 +12,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import io.github.friedkeenan.baby_powder.BabyPowderStats;
 import io.github.friedkeenan.baby_powder.StatsScreenGetter;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.stats.StatsCounter;
 import net.minecraft.world.entity.EntityType;
@@ -60,9 +58,9 @@ public class ShowBabyKillsInMobRowMixin {
         final var num_baby_kills = stats.getValue(BabyPowderStats.BABIES_KILLED.get(entity));
         if (num_baby_kills > 0) {
             this.has_baby_kills = true;
-            this.baby_kills = Component.translatable("stat_type.baby_powder.baby_kills", num_baby_kills, this.mobName);
+            this.baby_kills = Component.translatable("stat_type.baby_powder.babies_killed", num_baby_kills, this.mobName);
         } else {
-            this.baby_kills = Component.translatable("stat_type.baby_powder.baby_kills.none", this.mobName);
+            this.baby_kills = Component.translatable("stat_type.baby_powder.babies_killed.none", this.mobName);
         }
 
         final var num_babies_killed_by = stats.getValue(BabyPowderStats.BABIES_KILLED_BY.get(entity));
@@ -75,15 +73,15 @@ public class ShowBabyKillsInMobRowMixin {
     }
 
     @Inject(at = @At("TAIL"), method = "render")
-    private void renderBabyKills(PoseStack pose_stack, int i, int j, int k, int l, int m, int n, int o, boolean bl, float f, CallbackInfo info) {
+    private void renderBabyKills(GuiGraphics graphics, int i, int j, int k, int l, int m, int n, int o, boolean bl, float f, CallbackInfo info) {
         final var font = this.getFont();
         var height_offset = j + 1 + font.lineHeight * 3;
 
-        GuiComponent.drawString(pose_stack, font, this.baby_kills, k + 2 + 10, height_offset, this.has_baby_kills ? 0x909090 : 0x606060);
+        graphics.drawString(font, this.baby_kills, k + 2 + 10, height_offset, this.has_baby_kills ? 0x909090 : 0x606060);
 
         height_offset += font.lineHeight;
 
-        GuiComponent.drawString(pose_stack, font, this.babies_killed_by, k + 2 + 10, height_offset, this.was_killed_by_baby ? 0x909090 : 0x606060);
+        graphics.drawString(font, this.babies_killed_by, k + 2 + 10, height_offset, this.was_killed_by_baby ? 0x909090 : 0x606060);
     }
 
     @ModifyArg(

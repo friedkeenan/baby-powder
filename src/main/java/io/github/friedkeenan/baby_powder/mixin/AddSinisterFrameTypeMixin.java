@@ -26,14 +26,14 @@ public abstract class AddSinisterFrameTypeMixin implements PotentiallySinisterFr
 
     /* Enum constructors get hidden name and ordinal parameters. */
     @Invoker("<init>")
-    private static FrameType Constructor(String internal_name, int internal_ordinal, String name, int texture, ChatFormatting chat_color) {
+    private static FrameType Constructor(String internal_name, int internal_ordinal, String name, ChatFormatting chat_color) {
         throw new AssertionError();
     }
 
-    private static FrameType CreateFrameType(String internal_name, String name, int texture, ChatFormatting chat_color) {
+    private static FrameType CreateFrameType(String internal_name, String name, ChatFormatting chat_color) {
         final var values = new ArrayList<>(Arrays.asList($VALUES));
 
-        final var frame_type = Constructor(internal_name, values.get(values.size() - 1).ordinal() + 1, name, texture, chat_color);
+        final var frame_type = Constructor(internal_name, values.get(values.size() - 1).ordinal() + 1, name, chat_color);
         values.add(frame_type);
 
         /* I hate Java, and that I have to pass an empty array to get the right type. */
@@ -48,5 +48,5 @@ public abstract class AddSinisterFrameTypeMixin implements PotentiallySinisterFr
         return ((Object) this) == SINISTER;
     }
 
-    private static final FrameType SINISTER = CreateFrameType("SINISTER", "sinister", 0, ChatFormatting.DARK_RED);
+    private static final FrameType SINISTER = CreateFrameType("SINISTER", "sinister", ChatFormatting.DARK_RED);
 }

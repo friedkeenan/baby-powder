@@ -1,6 +1,6 @@
 package io.github.friedkeenan.baby_powder;
 
-import net.minecraft.core.BlockSource;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntitySelector;
@@ -11,7 +11,7 @@ import net.minecraft.world.phys.AABB;
 public class BabyPowderDispenseItemBehavior extends OptionalDispenseItemBehavior {
     @Override
     public ItemStack execute(BlockSource source, ItemStack item) {
-        final var level = source.getLevel();
+        final var level = source.level();
 
         /*
             BlockSource::getLevel returns ServerLevel; it should never be clientside.
@@ -21,7 +21,7 @@ public class BabyPowderDispenseItemBehavior extends OptionalDispenseItemBehavior
             return item;
         }
 
-        final var pos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
+        final var pos = source.pos().relative(source.state().getValue(DispenserBlock.FACING));
         final var mobs = level.getEntitiesOfClass(AgeableMob.class, new AABB(pos), EntitySelector.NO_SPECTATORS);
 
         this.setSuccess(false);

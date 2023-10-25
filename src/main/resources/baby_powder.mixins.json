@@ -18,6 +18,7 @@
         "ScreenAccessor",
         "StatsScreenAccessor",
         "ListItemHeightIncreaser",
+        "AdjustMobStatisticsWidth",
         "AllowBabyKillsInMobStatistics",
         "ShowBabyKillsInMobRowMixin",
 

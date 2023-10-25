@@ -18,6 +18,7 @@ public class ListItemHeightIncreaser implements ItemHeightIncreaser {
     @Shadow
     private int itemHeight;
 
+    @Override
     public void increaseItemheight(int additional_height) {
         this.itemHeight += additional_height;
     }

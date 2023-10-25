@@ -35,7 +35,7 @@ public class BabyPowderItem extends Item {
 
     public static void MakePoofParticles(AgeableMob mob) {
         /* Reuses the particle effect for when a mob dies. */
-        mob.level.broadcastEntityEvent(mob, (byte) 60);
+        mob.level().broadcastEntityEvent(mob, (byte) 60);
     }
 
     public static void PlayPoofSound(AgeableMob mob) {
@@ -71,7 +71,7 @@ public class BabyPowderItem extends Item {
         PlayPoofSound(mob);
         mob.gameEvent(GameEvent.ENTITY_INTERACT);
 
-        return InteractionResult.sidedSuccess(mob.level.isClientSide);
+        return InteractionResult.sidedSuccess(mob.level().isClientSide());
     }
 
     public BabyPowderItem(Item.Properties properties) {
