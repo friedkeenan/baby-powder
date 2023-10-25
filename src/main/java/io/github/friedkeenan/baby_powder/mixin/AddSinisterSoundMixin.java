@@ -8,12 +8,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import io.github.friedkeenan.baby_powder.PotentiallySinisterFrameType;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.AdvancementToast;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
@@ -25,7 +24,7 @@ import net.minecraft.sounds.SoundEvents;
 public class AddSinisterSoundMixin {
     @Shadow
     @Final
-    private Advancement advancement;
+    private AdvancementHolder advancement;
 
     @Inject(
         at = @At(
@@ -37,8 +36,9 @@ public class AddSinisterSoundMixin {
 
         method = "render"
     )
-    private void playSinisterSound(PoseStack pose_stack, ToastComponent component, long time, CallbackInfoReturnable<Toast.Visibility> info) {
-        final var frame = (PotentiallySinisterFrameType) (Object) advancement.getDisplay().getFrame();
+    private void playSinisterSound(GuiGraphics graphics, ToastComponent component, long time, CallbackInfoReturnable<Toast.Visibility> info) {
+        /* NOTE: At this point in 'render' we know that 'advancement.value().display()' holds a value. */
+        final var frame = (PotentiallySinisterFrameType) (Object) advancement.value().display().get().getFrame();
 
         if (frame.isSinister()) {
             component.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.AMBIENT_CAVE.value(), 1.0f, 1.0f));

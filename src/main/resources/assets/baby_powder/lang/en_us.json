@@ -6,8 +6,8 @@
     "stat.baby_powder.babies_killed_total": "Babies Killed - Total",
     "stat.baby_powder.babies_killed_monster": "Babies Killed - Monster",
     "stat.baby_powder.babies_killed_innocent": "Babies Killed - Innocent",
-    "stat_type.baby_powder.baby_kills": "You killed %s %s babies",
-    "stat_type.baby_powder.baby_kills.none": "You have never killed a %s baby",
+    "stat_type.baby_powder.babies_killed": "You killed %s %s babies",
+    "stat_type.baby_powder.babies_killed.none": "You have never killed a %s baby",
     "stat_type.baby_powder.babies_killed_by": "%s babies killed you %s time(s)",
     "stat_type.baby_powder.babies_killed_by.none": "You have never been killed by a %s baby",
 

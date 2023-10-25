@@ -2,6 +2,7 @@ package io.github.friedkeenan.baby_powder;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.stats.StatType;
@@ -24,7 +25,9 @@ public class BabyPowderStats {
     }
 
     public static <T> StatType<T> RegisterRegistryStat(String name, Registry<T> registry) {
-        return Registry.register(BuiltInRegistries.STAT_TYPE, new ResourceLocation("baby_powder", name), new StatType<>(registry));
+        final var display_name = Component.translatable("stat_type.baby_powder." + name);
+
+        return Registry.register(BuiltInRegistries.STAT_TYPE, new ResourceLocation("baby_powder", name), new StatType<>(registry, display_name));
     }
 
     public static void register() {

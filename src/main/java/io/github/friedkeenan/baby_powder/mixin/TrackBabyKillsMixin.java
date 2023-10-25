@@ -18,7 +18,7 @@ public class TrackBabyKillsMixin {
         return (Player) (Object) this;
     }
 
-    @Inject(at = @At("HEAD"), method = "wasKilled")
+    @Inject(at = @At("HEAD"), method = "killedEntity")
     private void awardBabiesKilled(ServerLevel level, LivingEntity entity, CallbackInfoReturnable<Boolean> info) {
         if (entity.isBaby()) {
             final var player = this.asPlayer();

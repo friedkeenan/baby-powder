@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import io.github.friedkeenan.baby_powder.ItemHeightIncreaser;
+import io.github.friedkeenan.baby_powder.MobStatisticsListTag;
 import io.github.friedkeenan.baby_powder.StatsScreenGetter;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -22,7 +23,7 @@ import net.minecraft.client.gui.screens.achievement.StatsScreen;
 */
 @Mixin(targets = {"net/minecraft/client/gui/screens/achievement/StatsScreen$MobsStatisticsList"})
 @Environment(EnvType.CLIENT)
-public class AllowBabyKillsInMobStatistics implements StatsScreenGetter {
+public class AllowBabyKillsInMobStatistics implements MobStatisticsListTag, StatsScreenGetter {
     @Shadow
     @Final
     private StatsScreen field_18763;
@@ -40,13 +41,5 @@ public class AllowBabyKillsInMobStatistics implements StatsScreenGetter {
     private void constructor(StatsScreen stats_screen, Minecraft minecraft, CallbackInfo info) {
         /* Add enough vertical space for two more lines. */
         ((ItemHeightIncreaser) this).increaseItemheight(this.getFont().lineHeight * 2);
-
-        /*
-            NOTE: Currently text can run off the right edge
-            of the screen and thus not be highlighted correctly.
-
-            It would be nice to fix this, but I think the simple,
-            non-invasive solutions would end up looking weird.
-        */
     }
 }
